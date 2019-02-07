@@ -1,0 +1,35 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    padding: 1em;
+    text-align: center;
+    background-color: green;
+}
+
+section {
+    display: inline-block;
+    width: 40%;
+    height: 50vh;
+    border: 2px solid white;
+    margin: 10px;
+    font-size: 1.5em;
+}
+
+header {
+    font-size: 3em;
+    color: white;
+}
+
+#action {
+    margin: 10px;
+}
+
+#money {
+    margin: 10px;
+    color: yellow;
+    font-size: 1.5em;
+}
+
