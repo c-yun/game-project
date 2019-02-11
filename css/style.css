@@ -6,30 +6,25 @@ html, body {
 body {
     padding: 1em;
     text-align: center;
-    background-color: green;
+    /* background-color: green; */
+    background-image: url("https://i.imgur.com/U8td6pm.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
-section {
-    display: inline-block;
+#dealer-hand, #player-hand {
     width: 40%;
-    height: 50vh;
-    border: 2px solid white;
+    height: 30vh;
+    /* border: 2px solid white; */
     margin: 10px;
     font-size: 1.5em;
 }
 
-header {
+h1 {
     font-size: 3em;
     color: white;
 }
 
-#action {
+button {
     margin: 10px;
 }
-
-#money {
-    margin: 10px;
-    color: yellow;
-    font-size: 1.5em;
-}
-

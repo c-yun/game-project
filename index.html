@@ -11,24 +11,27 @@
 
 <body>
 
-    <header>BLACKJACK</header>
+    <h1>BLACKJACK</h1>
 
-    <section id="cardbox">Player</section>
+    <h2>Dealer</h2>
+    <div id="dealer-hand"></div>
+    <div id="dealer-score">Score: </div>
 
-    <section id="cardbox">Dealer</section>
-    
-    <div id="bets">
-        <button class="btn" value="start" onclick="start()">Start</button>
+    <h2>Player</h2>
+    <div id="player-hand"></div>
+    <div id="player-score">Score: </div>
+    <!-- <div id="bets">
         <button class="btn" value="bet5" onclick="bet5()">Bet $5</button>		
         <button class="btn" value="bet10" onclick="bet10()">Bet $10</button>		
         <button class="btn" value="bet20" onclick="bet20()">Bet $20</button>
-    </div>
+    </div> -->
 
-    <div id="action"></div>		
-        <button class="btn">Hit</button>
-        <button class="btn">Stand</button>
-        <button class="btn">Double Down</button>
-        <div id="money">$100</div>
+    <div>	
+        <button type="button" id="hit-btn">Hit</button>
+        <button type="button" id="stand-btn">Stand</button>
+        <button type="button" id="newgame-btn">New Game</button>
+        <!-- <button type="button" id="dd-btn">Double Down</button>
+        <div id="money">$100</div> -->
     </div>
     <script src="js/app.js"></script>
 
