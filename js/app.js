@@ -61,7 +61,6 @@ function deal(who, numCards) {
 
     displayPlayerCards();
 
-
     
     function dealerTurn() {
         //softHand;
@@ -124,11 +123,18 @@ function deal(who, numCards) {
         });
     }
 
-    function displayPlayerScore() {
-        playerScoreEl.textContent = "";
+    // function displayPlayerScore() {
+    //     playerScoreEl.textContent = "";
 
-    }
+    // }
    
+    // function displayDealerOne() {
+    //     // dealerHandEl.textContent = "";
+    //     let dealerCard = document.createElement("img");
+    //     dealerCard.src = dealer[0];
+    //     dealerHandEl.appendChild(dealerCard);
+    // }
+
 
     dealer.forEach(function(card) {
         let newCard = document.createElement("img");
