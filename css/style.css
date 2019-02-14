@@ -6,10 +6,9 @@ html, body {
 body {
     padding: 1em;
     text-align: center;
-    /* background-color: green; */
-    background-image: url("https://i.imgur.com/U8td6pm.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-color: green;
+    /* background-repeat: no-repeat;
+    background-attachment: fixed; */
 }
 
 #dealer-hand, #player-hand {
@@ -19,6 +18,11 @@ body {
     height: auto;
     /* border: 2px solid white; */
     margin: 10px;
+    font-size: 1.5em;
+}
+
+#dealer-score, #player-score {
+    color: yellow;
     font-size: 1.5em;
 }
 

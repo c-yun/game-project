@@ -113,12 +113,12 @@ function dealerTurn() {
 function hit() {
     player.push(deck.pop());
     displayPlayerCards();
-    console.log('new player hand ' + player)
     if ((player[0].value + player[1].value) > 21) {
         console.log("BUST!");
-        dealerTurn();
+        addStatus('Player busted!');
+        }
     }
-}
+
     
 function stand() {
     addStatus('Player Stands');
@@ -135,8 +135,9 @@ function handScore(deck) {
     for (let i = 0; i < deck.length; i++) {
         let card = deck[i];
         score += card.value;
-        if (card.rank === "Ace")
-        ++aceCount;
+        if (card.rank === "Ace") {
+        aceCount++;
+        }
     }
     while (score <= 11 && aceCount > 0) {
         score += 10;
@@ -152,8 +153,12 @@ function displayPlayerCards() {
         let newCard = document.createElement("img");
         newCard.src = card.src;
         playerHandEl.appendChild(newCard);
+        playerScoreEl.textContent = handScore(player);
+
     })
 }
+
+
 
 function displayDealerCards() {
     dealerHandEl.textContent = "";
@@ -161,6 +166,8 @@ function displayDealerCards() {
         let newCard = document.createElement("img");
         newCard.src = card.src;
         dealerHandEl.appendChild(newCard);
+        dealerScoreEl.textContent = handScore(dealer);
+
     })
 }
 
