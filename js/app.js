@@ -1,44 +1,50 @@
 
 var values = [2,3,4,5,6,7,8,9,10,10,10,10,11]
 
-
 var suits = ["Spades", "Clubs", "Diamonds", "Hearts"];
 var ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"];
 var deck = [];
 var player = [];
 var dealer = [];
 
+var statusArea = document.getElementById('status');
 var playerHandEl = document.getElementById("player-hand");
 var dealerHandEl = document.getElementById("dealer-hand");
 var playerScoreEl = document.getElementById("player-score");
 var dealerScoreEl = document.getElementById("dealer-score");
 
-var softHand;
 // document buttons
 var hitBtn = document.getElementById('hit-btn');
 var standBtn = document.getElementById('stand-btn');
 var newGameBtn = document.getElementById('newgame-btn');
 
+function addStatus(str)
+{
+	console.log(str);
+	statusArea.appendChild(textBox(str));
+}
 
+function textBox(str)
+{
+	let div = document.createElement('div');
+	div.textContent = str;
+	return div;
+}
 
 suits.forEach( function(suit) {
     for (let i = 0; i < values.length; i++) {
-        var src = "./img/" + ranks[i].toLowerCase() + "_of_" + suit.toLowerCase() + ".png"
+        let src = "./img/" + ranks[i].toLowerCase() + "_of_" + suit.toLowerCase() + ".png"
         deck.push({suit: suit, value: values[i], rank: ranks[i], src: src});
     }
-    // suit
-    // value
-    // rank
-    
-    
+
 })
 console.log(deck);
 
 function shuffle() {
-    for (var i = 0; i < 100; i ++) {
-        var random1 = Math.floor(deck.length * Math.random());
-        var random2 = Math.floor(deck.length * Math.random());
-        var generate = deck[random1];
+    for (let i = 0; i < 100; i ++) {
+        let random1 = Math.floor(deck.length * Math.random());
+        let random2 = Math.floor(deck.length * Math.random());
+        let generate = deck[random1];
         
         deck[random1] = deck[random2];
         deck[random2] = generate;
@@ -60,100 +66,116 @@ function deal(who, numCards) {
     }
 
     displayPlayerCards();
-
+    displayDealerCards();
     
-    function dealerTurn() {
-        //softHand;
-        // show hidden card
-        let dealerScore = handScore(dealer);
+function dealerTurn() {
+    addStatus("Dealer's Turn");
+    let dealerScore = handScore(dealer);
+    console.log(dealerScore)
+    while (dealerScore < 17) {
+        let drawCard = deck.pop();
+        dealer.push(drawCard);
+        displayDealerCards();
+        dealerScore = handScore(dealer);
         console.log(dealerScore)
-        while (dealerScore < 17) {
-            let drawCard = deck.pop();
-            dealer.push(drawCard);
-            dealerScore = handScore(dealer);
-            console.log(dealerScore)
-            if (dealerScore > 21) {
-                console.log("BUST!")
-                break;
-            }
         }
+
+        let dealerBusted = false;
+        if (dealerScore > 21) {
+            console.log("BUST!")
+            addStatus('Dealer busted');
+            dealerBusted = true;
     }
+        else
+            addStatus('Dealer stands');
+
+        let playerScore = handScore(player);
+        let playerBusted = false;
+        if (playerScore > 21)
+                playerBusted = true;
+        if (dealerBusted && playerBusted)
+                addStatus('Push');
+        else if (dealerBusted && !playerBusted)
+                addStatus('Player wins!');
+        else if (!dealerBusted && playerBusted)
+                addStatus('Dealer wins!');
+        else //No one busts
+        {
+            if (dealerScore === playerScore)
+			    addStatus('Push');
+		    else if (dealerScore >  playerScore)
+			    addStatus('Dealer wins!');
+		    else
+			    addStatus('Player wins!');
+	}
+}
     
-    function hit() {
-        player.push(deck.pop());
-        displayPlayerCards();
-        console.log('new player hand ' + player)
-        if ((player[0].value + player[1].value) > 21) {
-            console.log("BUST!");
-            dealerTurn();
-        }
-    }
-    
-    function stand() {
+function hit() {
+    player.push(deck.pop());
+    displayPlayerCards();
+    console.log('new player hand ' + player)
+    if ((player[0].value + player[1].value) > 21) {
+        console.log("BUST!");
         dealerTurn();
     }
+}
     
-    function reset() {
+function stand() {
+    addStatus('Player Stands');
+    dealerTurn();
+}
+    
+function reset() {
         
-    }
+}
     
-    function handScore(deck) {
-        let aceCount = 0;
-        let score = 0;
-        for (let i = 0; i < deck.length; i++) {
-            let card = deck[i];
-            score += card.value;
-            if (card.rank === "Ace")
-            ++aceCount;
-        }
-        while (score <= 11 && aceCount > 0) {
-            score += 10;
-            ace -= 1;
-        }
-        return score;
+function handScore(deck) {
+    let aceCount = 0;
+    let score = 0;
+    for (let i = 0; i < deck.length; i++) {
+        let card = deck[i];
+        score += card.value;
+        if (card.rank === "Ace")
+        ++aceCount;
     }
-
-
-    function displayPlayerCards() {
-        playerHandEl.textContent = "";
-        player.forEach(function(card) {
-            let newCard = document.createElement("img");
-            newCard.src = card.src;
-            playerHandEl.appendChild(newCard);
-        });
+    while (score <= 11 && aceCount > 0) {
+        score += 10;
+        ace -= 1;
     }
-
-    // function displayPlayerScore() {
-    //     playerScoreEl.textContent = "";
-
-    // }
-   
-    // function displayDealerOne() {
-    //     // dealerHandEl.textContent = "";
-    //     let dealerCard = document.createElement("img");
-    //     dealerCard.src = dealer[0];
-    //     dealerHandEl.appendChild(dealerCard);
-    // }
+    return score;
+}
 
 
+function displayPlayerCards() {
+    playerHandEl.textContent = "";
+    player.forEach(function(card) {
+        let newCard = document.createElement("img");
+        newCard.src = card.src;
+        playerHandEl.appendChild(newCard);
+    })
+}
+
+function displayDealerCards() {
+    dealerHandEl.textContent = "";
     dealer.forEach(function(card) {
         let newCard = document.createElement("img");
         newCard.src = card.src;
         dealerHandEl.appendChild(newCard);
     })
+}
 
-   
-    
-    // document.getElementById("player-hand").textContent = player;
-    // document.getElementById("dealer-hand").textContent = dealer;
-    // document.getElementById("player-score").textContent = playerBoxScore;
-    // document.getElementById("dealer-score").textContent = dealerBoxScore;
+function setStatus(str) {
+    removeAllChildren(statusArea);
+    addStatus(str);
+}   
 
+
+    // Event Listeners
     hitBtn.addEventListener('click', hit);
     standBtn.addEventListener('click', stand);
     newGameBtn.addEventListener('click', reset);
     
-    // reset game
+// reset game
 // add status updates
 // keep score
 
