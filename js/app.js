@@ -109,16 +109,17 @@ function dealerTurn() {
 			    addStatus('Player wins!');
 	}
 }
-    
+ 
 function hit() {
-    player.push(deck.pop());
-    displayPlayerCards();
-    if ((player[0].value + player[1].value) > 21) {
-        console.log("BUST!");
-        addStatus('Player busted!');
-        }
-    }
-
+	addStatus('Player hits');
+	player.push(deck.pop());
+	displayPlayerCards();
+	let score = handScore(player);
+	if (score > 21) {
+		addStatus('Player busted');
+		dealerTurn();
+	}
+}
     
 function stand() {
     addStatus('Player Stands');
