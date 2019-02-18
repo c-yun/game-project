@@ -13,31 +13,33 @@ var dealerHandEl = document.getElementById("dealer-hand");
 var playerScoreEl = document.getElementById("player-score");
 var dealerScoreEl = document.getElementById("dealer-score");
 
-// document buttons
 var hitBtn = document.getElementById('hit-btn');
 var standBtn = document.getElementById('stand-btn');
-var newGameBtn = document.getElementById('newgame-btn');
+document.getElementById('newgame-btn').addEventListener('click', function() {
+    reset();
+});
 
 function addStatus(str)
 {
 	console.log(str);
 	statusArea.appendChild(textBox(str));
-}
+};
 
 function textBox(str)
 {
 	let div = document.createElement('div');
 	div.textContent = str;
 	return div;
-}
+};
 
-suits.forEach( function(suit) {
-    for (let i = 0; i < values.length; i++) {
-        let src = "./img/" + ranks[i].toLowerCase() + "_of_" + suit.toLowerCase() + ".png"
-        deck.push({suit: suit, value: values[i], rank: ranks[i], src: src});
-    }
+    suits.forEach( function(suit) {
+        for (let i = 0; i < values.length; i++) {
+            let src = "./img/" + ranks[i].toLowerCase() + "_of_" + suit.toLowerCase() + ".png"
+            deck.push({suit: suit, value: values[i], rank: ranks[i], src: src});
+        };
+    
+    });
 
-})
 console.log(deck);
 
 function shuffle() {
@@ -48,8 +50,8 @@ function shuffle() {
         
         deck[random1] = deck[random2];
         deck[random2] = generate;
-    }
-}
+    };
+};
 console.log(shuffle());
 deal(player, 2);
 deal(dealer, 2);
@@ -62,8 +64,8 @@ console.log(deck.length)
 function deal(who, numCards) {
     for (let i = 0; i < numCards; i++) {
         who.push(deck.pop())
-        }
-    }
+        };
+    };
 
     displayPlayerCards();
     displayDealerCards();
@@ -78,7 +80,7 @@ function dealerTurn() {
         displayDealerCards();
         dealerScore = handScore(dealer);
         console.log(dealerScore)
-        }
+        };
 
         let dealerBusted = false;
         if (dealerScore > 21) {
@@ -107,8 +109,8 @@ function dealerTurn() {
 			    addStatus('Dealer wins!');
 		    else
 			    addStatus('Player wins!');
-	}
-}
+	};
+};
  
 function hit() {
 	addStatus('Player hits');
@@ -117,18 +119,18 @@ function hit() {
 	let score = handScore(player);
 	if (score > 21) {
 		addStatus('Player busted');
-		dealerTurn();
-	}
-}
+        dealerTurn();
+	};
+};
     
 function stand() {
     addStatus('Player Stands');
     dealerTurn();
-}
-    
-function reset() {
-        
-}
+};
+
+function reset(){
+    location.reload(); 
+};
     
 function handScore(deck) {
     let aceCount = 0;
@@ -138,14 +140,14 @@ function handScore(deck) {
         score += card.value;
         if (card.rank === "Ace") {
         aceCount++;
-        }
-    }
+        };
+    };
     while (score <= 11 && aceCount > 0) {
         score += 10;
         ace -= 1;
-    }
+    };
     return score;
-}
+};
 
 
 function displayPlayerCards() {
@@ -156,10 +158,8 @@ function displayPlayerCards() {
         playerHandEl.appendChild(newCard);
         playerScoreEl.textContent = handScore(player);
 
-    })
-}
-
-
+    });
+};
 
 function displayDealerCards() {
     dealerHandEl.textContent = "";
@@ -169,21 +169,16 @@ function displayDealerCards() {
         dealerHandEl.appendChild(newCard);
         dealerScoreEl.textContent = handScore(dealer);
 
-    })
-}
+    });
+};
 
 function setStatus(str) {
     removeAllChildren(statusArea);
     addStatus(str);
-}   
-
-
+};   
     // Event Listeners
     hitBtn.addEventListener('click', hit);
     standBtn.addEventListener('click', stand);
     newGameBtn.addEventListener('click', reset);
     
-// reset game
-// add status updates
-// keep score
 
